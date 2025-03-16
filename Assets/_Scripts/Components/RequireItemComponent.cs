@@ -11,7 +11,7 @@ public class RequireItemComponent : IInteractableComponent
 
     public override void Interact(Player player)
     {
-        if (string.Equals(player.TempTarget?.Tag, _required))
+       /* if (string.Equals(player.SelectedObject?.Tag, _required))
         {
             message.SetText(MessagesData.WIN);
             _onSuccess?.Invoke();
@@ -20,9 +20,9 @@ public class RequireItemComponent : IInteractableComponent
         
         message.SetText(
             player.Inventory.Get(_required) != null ?
-                MessagesData.NO_REQUIRE_HAND(_required, player.TempTarget.Tag) :
+                MessagesData.NO_REQUIRE_HAND(_required, player.SelectedObject.Tag) :
                 MessagesData.NO_REQUIRE_INVENTORY(_required)
         );
-        _onFail?.Invoke();
+        _onFail?.Invoke();*/
     }
 }

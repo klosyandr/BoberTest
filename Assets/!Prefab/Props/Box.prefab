@@ -153,3 +153,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tag: Box
   _sizeCoef: 0.5
+  _localOffset: {x: 0.03, y: -0.13, z: -0.12}

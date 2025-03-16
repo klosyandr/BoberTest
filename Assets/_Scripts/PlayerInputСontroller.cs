@@ -39,6 +39,7 @@ public class PlayerInputСontroller : MonoBehaviour
 
         _mousePositionAction.performed += context => { _currentPosition = context.ReadValue<Vector2>(); };
         _deltaAction.performed += context => { _currentDelta = context.ReadValue<Vector2>(); };
+        _deltaAction.canceled += context => { _currentDelta = context.ReadValue<Vector2>(); };
         _moveAction.performed += context => { _currentDirection = context.ReadValue<Vector2>(); };
         _interactAction.performed += context => { OnInteract?.Invoke(CurrentWorldPosition); };
         _dropAction.performed += context => { OnDrop?.Invoke(); };

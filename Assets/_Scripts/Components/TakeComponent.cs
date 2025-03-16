@@ -4,12 +4,14 @@ public class TakeComponent : IInteractableComponent
 {
     [InventoryId] [SerializeField] public string _tag;
     [SerializeField] private float _sizeCoef = 1;
+    [SerializeField] private Vector3 _localOffset = Vector3.zero;
 
     private Vector3 _initialScale;
     private Rigidbody _rigidbody;
     private Collider _collider;
 
     public string Tag => _tag;
+    public Vector3 LocalOffset => _localOffset;
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class TakeComponent : IInteractableComponent
     {
         if (!player.Inventory.TryAdd(_tag, this)) return;
         
-        Take(player.TargetPos);
+        Take(player.Hand.TargetPos);
     }
 
     public void Take(Transform parent)
@@ -37,14 +39,11 @@ public class TakeComponent : IInteractableComponent
 
         transform.localScale = _initialScale * _sizeCoef;
         transform.localRotation =  Quaternion.Euler(0, 0, 0);
-        transform.localPosition = Vector3.zero;
-        gameObject.SetActive(false);
+        transform.localPosition = _localOffset;
     }
     
     public void Drop(Vector3 force)
     {
-        gameObject.SetActive(true);
-
         transform.localScale = _initialScale;
         transform.parent = null;
         _collider.enabled = true;
