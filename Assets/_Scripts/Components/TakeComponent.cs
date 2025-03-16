@@ -6,6 +6,7 @@ public class TakeComponent : IInteractableComponent
     [InventoryId] [SerializeField] public string _tag;
     [SerializeField] private float _sizeCoef = 1;
     [SerializeField] private Vector3 _localOffset = Vector3.zero;
+    [SerializeField] private AudioSource _sfx;
 
     private Vector3 _initialScale;
     private Rigidbody _rigidbody;
@@ -27,7 +28,7 @@ public class TakeComponent : IInteractableComponent
     
     public override void Interact(Player player)
     {
-        player.Hand.Take(this);
+        player.Hand.Take(this, _sfx.clip);
     }
 
     public void Take(Transform parent)
@@ -39,6 +40,7 @@ public class TakeComponent : IInteractableComponent
         transform.localScale = _initialScale * _sizeCoef;
         transform.localRotation =  Quaternion.Euler(0, 0, 0);
         transform.localPosition = _localOffset;
+        gameObject.SetActive(false);
     }
     
     public void Drop(Vector3 force)
@@ -48,6 +50,7 @@ public class TakeComponent : IInteractableComponent
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(force, ForceMode.Impulse);
         transform.DOScale(_initialScale, 0.2f);
+        _sfx?.Play();
     }
 }
 

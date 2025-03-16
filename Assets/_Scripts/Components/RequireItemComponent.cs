@@ -17,7 +17,6 @@ public class RequireItemComponent : IInteractableComponent
             _onSuccess?.Invoke();
             return;
         }
-        Debug.Log(player.Inventory.HasItem(_required));
 
         message.SetText(
             player.Inventory.HasItem(_required) ?

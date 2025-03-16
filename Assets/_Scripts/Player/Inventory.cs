@@ -144,7 +144,6 @@ public class InventorySlotData
     public void AddItem(TakeComponent item)
     {
         _pool.Add(item);
-        item.gameObject.SetActive(false);
     }
 
     public void RemoveItem()

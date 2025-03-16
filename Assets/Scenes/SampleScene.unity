@@ -679,12 +679,12 @@ PrefabInstance:
       objectReference: {fileID: 605255492}
     - target: {fileID: 4557807458424058946, guid: 325405a8d9785bf41aa85e796916dc37,
         type: 3}
-      propertyPath: _onSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      propertyPath: _onSuccess.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1900020996}
     - target: {fileID: 4557807458424058946, guid: 325405a8d9785bf41aa85e796916dc37,
         type: 3}
-      propertyPath: _onSuccess.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      propertyPath: _onSuccess.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 1327078745}
     - target: {fileID: 6115363896305563195, guid: 325405a8d9785bf41aa85e796916dc37,
@@ -4316,11 +4316,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6296675644115393429, guid: 797d20049fabe4e489b769455664e529,
-        type: 3}
-      propertyPath: _input
-      value: 
-      objectReference: {fileID: 1974341553}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

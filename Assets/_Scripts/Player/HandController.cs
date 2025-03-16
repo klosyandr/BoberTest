@@ -4,6 +4,7 @@ using UnityEngine;
 public class HandController : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private AudioSource _sfx;
     [Space]
     [SerializeField] private Transform _orientation;
     [SerializeField] private Transform _targetPosition;
@@ -29,11 +30,13 @@ public class HandController : MonoBehaviour
         if(_selectedObject != null) Show(_selectedObject);
     }
 
-    public void Take(TakeComponent item)
+    public void Take(TakeComponent item, AudioClip clip)
     {
         if (!_player.Inventory.TryAdd(item)) return;
 
         item.Take(_targetPosition);
+        _sfx.clip = clip;
+        _sfx?.Play();
     }
 
     private void Hide(TakeComponent target)
