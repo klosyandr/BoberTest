@@ -1,10 +1,9 @@
 using DG.Tweening;
-using NaughtyAttributes;
 using UnityEngine;
 
 public class HandController : MonoBehaviour
 {
-    [ReadOnly] [SerializeField] private Player _player;
+    [SerializeField] private Player _player;
     [Space]
     [SerializeField] private Transform _orientation;
     [SerializeField] private Transform _targetPosition;
@@ -12,27 +11,29 @@ public class HandController : MonoBehaviour
     [SerializeField] private float _duration = 0.2f;
     [SerializeField] private float _forceDrop;
 
-    public Transform TargetPos => _targetPosition;
-
     private TakeComponent _selectedObject;
-
-    public TakeComponent SelectedObject
-    {
-        get { return _selectedObject; }
-        set
-        {
-            if (_selectedObject != null) Hide(_selectedObject);
-
-            _selectedObject = value;
-
-            if (_selectedObject != null) Show(_selectedObject);
-        }
-    }
 
     private void Awake()
     {
-        _player = GetComponent<Player>();
+        _player ??= GetComponent<Player>();
         _player.Input.OnDrop += OnDrop;
+        _player.Inventory.OnIndexChanged += (value) => ChangeSelectedObject();
+    }
+
+    private void ChangeSelectedObject()
+    {
+        if (_selectedObject != null && _selectedObject == _player.Inventory.SelectedItem) return;
+
+        if(_selectedObject != null) Hide(_selectedObject);
+        _selectedObject = _player.Inventory.SelectedItem;
+        if(_selectedObject != null) Show(_selectedObject);
+    }
+
+    public void Take(TakeComponent item)
+    {
+        if (!_player.Inventory.TryAdd(item)) return;
+
+        item.Take(_targetPosition);
     }
 
     private void Hide(TakeComponent target)
@@ -44,16 +45,18 @@ public class HandController : MonoBehaviour
     private void Show(TakeComponent target)
     {
         target.DOKill(true);
+        target.transform.localPosition = _hidePosition.localPosition;
         target.gameObject.SetActive(true);
-        target.gameObject.transform.DOLocalMove(target.LocalOffset, _duration);
+        target.gameObject.transform.DOLocalMove(target.LocalOffset, _duration).OnKill(() => target.gameObject.SetActive(true));
     }
 
     private void OnDrop()
     {
-        if (SelectedObject == null) return;
+        if (_selectedObject == null) return;
         
-        var dropable = SelectedObject;
-        _player.Inventory.Remove(SelectedObject.Tag, SelectedObject);
+        var dropable = _selectedObject;
+        _selectedObject = null;
+        _player.Inventory.RemoveSelected();
         dropable.Drop(_orientation.forward * _forceDrop);
     }
 

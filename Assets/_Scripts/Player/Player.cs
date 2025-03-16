@@ -1,15 +1,14 @@
 using UnityEngine;
-using NaughtyAttributes;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerInputСontroller _input;
     [SerializeField] private CameraController _camera;
     [Header("Components")]
-    [ReadOnly] [SerializeField] private PlayerInteraction _interaction;
-    [ReadOnly] [SerializeField] private PlayerMovement _move;
-    [ReadOnly] [SerializeField] private Inventory _inventory;
-    [ReadOnly] [SerializeField] private HandController _hand;
+    [SerializeField] private PlayerInteraction _interaction;
+    [SerializeField] private PlayerMovement _move;
+    [SerializeField] private Inventory _inventory;
+    [SerializeField] private HandController _hand;
 
     public PlayerInputСontroller Input => _input;
     public PlayerInteraction Interaction => _interaction;

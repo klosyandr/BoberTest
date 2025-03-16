@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Defs/Items", fileName = "Items")]
@@ -32,10 +33,13 @@ public struct ItemDef
     [SerializeField] private string _id;
     [SerializeField] private Sprite _icon;
     [SerializeField] private bool _isStacable;
+    [ShowIf("_isStacable")] [AllowNesting]
+    [SerializeField] private int _maxStackCount;
 
     public string Id => _id;
     public Sprite Icon => _icon;
     public bool IsStacable => _isStacable;
+    public int MaxStackCount => _maxStackCount;
     
     public bool IsVoid => string.IsNullOrEmpty(_id);
 }

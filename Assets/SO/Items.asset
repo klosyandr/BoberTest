@@ -16,9 +16,12 @@ MonoBehaviour:
   - _id: Box
     _icon: {fileID: 21300000, guid: ae5082e06cd95c947ab01956d8f56700, type: 3}
     _isStacable: 0
+    _maxStackCount: 0
   - _id: Key
     _icon: {fileID: 21300000, guid: 2b95d0d2dc38ff94aa6ce024c015ecf0, type: 3}
     _isStacable: 0
+    _maxStackCount: 2
   - _id: Coin
     _icon: {fileID: 21300000, guid: 6ff1f41b224e09e4da352a5cbd693d06, type: 3}
     _isStacable: 1
+    _maxStackCount: 3

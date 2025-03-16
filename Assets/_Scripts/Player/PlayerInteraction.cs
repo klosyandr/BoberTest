@@ -1,16 +1,15 @@
 using UnityEngine;
-using NaughtyAttributes;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [ReadOnly] [SerializeField] private Player _player;
+    [SerializeField] private Player _player;
     [Header("Interaction Settings")]
     [SerializeField] private LayerMask _layer;
     [SerializeField] private float _distance = 3f;
 
     private void Awake()
     {
-        _player = GetComponent<Player>();
+        _player ??= GetComponent<Player>();
         _player.Input.OnInteract += OnInteract;
     }
 

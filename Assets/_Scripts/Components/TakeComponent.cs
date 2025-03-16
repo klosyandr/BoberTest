@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class TakeComponent : IInteractableComponent
@@ -26,9 +27,7 @@ public class TakeComponent : IInteractableComponent
     
     public override void Interact(Player player)
     {
-        if (!player.Inventory.TryAdd(_tag, this)) return;
-        
-        Take(player.Hand.TargetPos);
+        player.Hand.Take(this);
     }
 
     public void Take(Transform parent)
@@ -44,11 +43,11 @@ public class TakeComponent : IInteractableComponent
     
     public void Drop(Vector3 force)
     {
-        transform.localScale = _initialScale;
         transform.parent = null;
         _collider.enabled = true;
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(force, ForceMode.Impulse);
+        transform.DOScale(_initialScale, 0.2f);
     }
 }
 

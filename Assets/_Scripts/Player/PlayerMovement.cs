@@ -1,9 +1,8 @@
-using NaughtyAttributes;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [ReadOnly] [SerializeField] private Player _player;
+    [SerializeField] private Player _player;
     [Header("Movement")]
     [SerializeField] private Transform _orientation;
     [SerializeField] private float _speed = 2f;
@@ -12,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _player = GetComponent<Player>();
+        _player ??= GetComponent<Player>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
     }

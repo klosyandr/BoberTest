@@ -9,14 +9,14 @@ public class InventoryItemWidget : MonoBehaviour
     [SerializeField] private TMP_Text _value;
     [SerializeField] private int _index;
 
-    public void SetData(InventoryItem item, int index)
+    public void SetData(InventorySlotData slot, int index)
     {
         Select(false);
         _index = index;
-        var def = DefsFacade.I.Items.Get(item.Id);
+        var def = DefsFacade.I.Items.Get(slot.Id);
         _icon.sprite = def.Icon;
         _icon.enabled = true;
-        _value.text = item.objectPool.Count > 1 ? $"x{item.objectPool.Count.ToString()}" : string.Empty;
+        _value.text = slot.Count > 1 ? $"x{slot.Count.ToString()}" : string.Empty;
     }
 
     public void Hide()
@@ -31,7 +31,7 @@ public class InventoryItemWidget : MonoBehaviour
         _selected.SetActive(value);
     }
 
-    public void OnIndexChanged(int newValue, int _)
+    public void OnIndexChanged(int newValue)
     {
         _selected.SetActive(_index == newValue && newValue != -1);
     }
