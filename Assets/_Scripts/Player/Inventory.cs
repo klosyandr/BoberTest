@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
         _collection = new List<InventorySlotData>();
 
         _player ??= GetComponent<Player>();
-        _player.Input.OnSelectNum += SelectSlot;
+        _player.Input.OnSelectNum += (value) => SelectSlot(value-1);
         _player.Input.OnScroll += SetNextItem;
     }
 
