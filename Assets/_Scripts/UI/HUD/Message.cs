@@ -12,6 +12,7 @@ public class Message : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.SetActive(false);
         _inventory.OnInventoryFull += () => SetText(MessagesData.INVENORY_FULL);
     }
 
