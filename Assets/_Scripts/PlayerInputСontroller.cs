@@ -13,6 +13,7 @@ public class PlayerInputСontroller : MonoBehaviour
     private InputAction _dropAction;
     private InputAction _numAction;
     private InputAction _scrollAction;
+    private InputAction _changeSensAction;
 
     private Vector2 _currentPosition;
     private Vector2 _currentDelta;
@@ -26,6 +27,7 @@ public class PlayerInputСontroller : MonoBehaviour
     public Action OnDrop;
     public Action<int> OnSelectNum;
     public Action<int> OnScroll;
+    public Action<float> OnChangeSens;
 
     private void OnEnable()
     {
@@ -36,15 +38,21 @@ public class PlayerInputСontroller : MonoBehaviour
         _dropAction = _playerInput.actions["Drop"];
         _numAction = _playerInput.actions["SelectNum"];
         _scrollAction = _playerInput.actions["Scroll"];
+        _changeSensAction = _playerInput.actions["ChangeSens"];
 
+
+        _deltaAction.performed += UpdateDelta;
+        _deltaAction.canceled += UpdateDelta;
+
+        _moveAction.performed += OnMove;
+        _moveAction.canceled += OnMove;
+        
         _mousePositionAction.performed += context => { _currentPosition = context.ReadValue<Vector2>(); };
-        _deltaAction.performed += context => { _currentDelta = context.ReadValue<Vector2>(); };
-        _deltaAction.canceled += context => { _currentDelta = context.ReadValue<Vector2>(); };
-        _moveAction.performed += context => { _currentDirection = context.ReadValue<Vector2>(); };
         _interactAction.performed += context => { OnInteract?.Invoke(CurrentWorldPosition); };
         _dropAction.performed += context => { OnDrop?.Invoke(); };
         _numAction.performed += OnPressNum;
         _scrollAction.performed += context => { OnScroll?.Invoke((int)context.ReadValue<Vector2>().normalized.y); };
+        _changeSensAction.performed += context => { OnChangeSens?.Invoke(context.ReadValue<float>()); };
     }
 
     private void OnPressNum(InputAction.CallbackContext context)
@@ -54,6 +62,17 @@ public class PlayerInputСontroller : MonoBehaviour
             OnSelectNum?.Invoke(value);
         }
     }
+
+    private void UpdateDelta(InputAction.CallbackContext context)
+    {
+        _currentDelta = context.ReadValue<Vector2>(); 
+    }
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        _currentDirection = context.ReadValue<Vector2>();
+    }
+
 
     private void OnDisable()
     {

@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     private float _currentXRotation;
     private float _currentYRotation;    
     private Vector2 _rotationVelocity;
+    private float _sensCoef = 1;
 
     public float YRotation => _currentYRotation;
 
@@ -23,6 +24,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        _player.Input.OnChangeSens += ChangeSensCoef;
         SetActiv(true);
         
         _currentXRotation = _xRotation;
@@ -42,10 +44,15 @@ public class CameraController : MonoBehaviour
         _isActiv = value;
     }
 
+    public void ChangeSensCoef(float value)
+    {
+        _sensCoef = Mathf.Clamp(_sensCoef + value * 0.1f, 0.1f, 1.2f);
+    }
+
     private void UpdateRotation()
     {
-        float mouseX = Input.Delta.x * _sensX;
-        float mouseY = Input.Delta.y * _sensY;
+        float mouseX = Input.Delta.x * _sensX * _sensCoef;
+        float mouseY = Input.Delta.y * _sensY * _sensCoef;
 
         _yRotation += mouseX;
 
